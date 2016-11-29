@@ -22,13 +22,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Set the fragment initially
-        /*BlankFragment fragment = new BlankFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
-                getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();*/
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -86,15 +79,13 @@ public class MainActivity extends AppCompatActivity
             BlankFragment fragment = new BlankFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_gallery) {
             TestFragment fragment = new TestFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_slideshow) {
 
