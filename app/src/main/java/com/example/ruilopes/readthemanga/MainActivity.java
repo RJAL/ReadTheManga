@@ -74,22 +74,30 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_favorite) {
             // Handle the camera action
-            BlankFragment fragment = new BlankFragment();
+            FavoriteFragment fragment = new FavoriteFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_gallery) {
-            TestFragment fragment = new TestFragment();
+        } else if (id == R.id.nav_anime) {
+            AnimeFragment fragment = new AnimeFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_manga) {
+            MangaFragment fragment = new MangaFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_search) {
+            SearchFragment fragment = new SearchFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_share) {
 
