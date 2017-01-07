@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class MangaParser extends AsyncTask<String, Void, String>{
 
-
+    //Parsing Para Obter Leitura do URL
     @Override
     protected String doInBackground(String... strings) {
 

@@ -3,6 +3,7 @@ package com.example.ruilopes.readthemanga;
 
 public class MangaAttributes {
 
+    //Criação dos Atributos
     private int id;
     private String title;
     private int chapters;
@@ -12,6 +13,8 @@ public class MangaAttributes {
     private double score;
     private String status;
 
+
+    //Encapsulamento dos Atributos: Refactor - Encapsulate Fields
     public int getId() {
         return id;
     }
