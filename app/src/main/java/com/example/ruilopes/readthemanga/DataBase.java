@@ -19,7 +19,7 @@ public class DataBase extends SQLiteOpenHelper{
     //Criação da Tabela e Colunas
     private static final String manga_table = "manga";
     private static final String id = "id";
-    private static final String  title = "title";
+    private static final String title = "title";
     private static final String chapters = "chapters";
     private static final String chap_read = "chap_read";
     private static final String volumes = "volumes";
@@ -37,9 +37,9 @@ public class DataBase extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d("..........", "--MANGA_TABLE_CREATED--");
 
-        String manga_table_create = "CREATE TABLE" + manga_table + "(" + id + "INTEGER PRIMARY KEY," +
-                title + "TEXT," + chapters + "INTEGER," + chap_read + "INTEGER," + volumes + "INTEGER," +
-                vol_read + "INTEGER," + score + "INTEGER" + status + "TEXT" + ")";
+        String manga_table_create = "CREATE TABLE " + manga_table + " ( " + id + " INTEGER PRIMARY KEY, " +
+                title + " TEXT, " + chapters + " INTEGER, " + chap_read + " INTEGER, " + volumes + " INTEGER, " +
+                vol_read + " INTEGER, " + score + " INTEGER " + status + " TEXT)";
 
         sqLiteDatabase.execSQL(manga_table_create);
     }
@@ -47,20 +47,20 @@ public class DataBase extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS" + manga_table);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + manga_table);
         onCreate(sqLiteDatabase);
     }
 
 
     public void addManga(MangaAttributes mangaAttributes){
         SQLiteDatabase database = this.getWritableDatabase();
-        String addQueryStatement = "INSERT INTO" + manga_table + "(" + id + "INTEGER PRIMARY KEY," +
-                title + "TEXT," + chapters + "INTEGER," + chap_read + "INTEGER," + volumes + "INTEGER," +
-                vol_read + "INTEGER," + score + "INTEGER" + status + "TEXT" + ") VALUES (" +
-                mangaAttributes.getId() + ",'" + mangaAttributes.getTitle() + "','" + mangaAttributes.getChapters()
+        String addQueryStatement = "INSERT INTO " + manga_table + " (" + id + ", " +
+                title + ", " + chapters + ", " + chap_read + ", " + volumes + ", " +
+                vol_read + ", " + score + ", " + status + ") VALUES (" +
+                mangaAttributes.getId() + ", '" + mangaAttributes.getTitle() + "', '" + mangaAttributes.getChapters()
                 + "','" + mangaAttributes.getChap_read() + "','" + mangaAttributes.getVolumes() + "','" +
-                mangaAttributes.getVol_read() + "','" + mangaAttributes.getScore() + "','" +
-                mangaAttributes.getStatus() + "';";
+                mangaAttributes.getVol_read() + "', '" + mangaAttributes.getScore() + "', '" +
+                mangaAttributes.getStatus() + "');";
 
         database.execSQL(addQueryStatement);
         database.close();
@@ -69,9 +69,10 @@ public class DataBase extends SQLiteOpenHelper{
 
     public void updateManga(MangaAttributes mangaAttributes){
         SQLiteDatabase database = this.getWritableDatabase();
-        String updateQueryStatement = "UPDATE" + manga_table + "SET" + chap_read + "='" + mangaAttributes.getChap_read()
-                + "'," + vol_read + "='" + mangaAttributes.getVol_read() + "'," + status + "=','" +
-                mangaAttributes.getStatus() + "';";
+        String updateQueryStatement = "UPDATE " + manga_table + " SET " + chap_read + " = '"
+                + mangaAttributes.getChap_read() + "', " + vol_read + " = '"
+                + mangaAttributes.getVol_read() + "', " + status + " = '" +
+                mangaAttributes.getStatus() + "' WHERE " + id + " = " + mangaAttributes.getId() + ";";
 
         database.execSQL(updateQueryStatement);
         database.close();
@@ -80,7 +81,7 @@ public class DataBase extends SQLiteOpenHelper{
 
     public  void removeManga(MangaAttributes mangaAttributes){
         SQLiteDatabase database = this.getWritableDatabase();
-        String removeQueryStatement = "DELETE FROM" + manga_table + "WHERE" + title + "='" + mangaAttributes.getTitle() + "';";
+        String removeQueryStatement = "DELETE FROM " + manga_table + " WHERE " + id + " = " + mangaAttributes.getId() + ";";
 
         database.execSQL(removeQueryStatement);
         database.close();
@@ -88,8 +89,8 @@ public class DataBase extends SQLiteOpenHelper{
 
 
     public ArrayList<MangaAttributes> mangas() {
-        ArrayList<MangaAttributes> mangaList = new ArrayList<MangaAttributes>();
-        String selectQueryStatement = "SELECT * FROM" + manga_table;
+        ArrayList<MangaAttributes> mangaList = new ArrayList<>();
+        String selectQueryStatement = "SELECT * FROM " + manga_table + ";";
 
         SQLiteDatabase sqldatabase = this.getWritableDatabase();
         Cursor c = sqldatabase.rawQuery(selectQueryStatement, null);

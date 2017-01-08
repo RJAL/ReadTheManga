@@ -10,6 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,7 +29,6 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,21 +84,21 @@ public class MainActivity extends AppCompatActivity
             FavoriteFragment fragment = new FavoriteFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+            fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
 
             //Navegação Para o Fragment Manga
         } else if (id == R.id.nav_manga) {
             MangaFragment fragment = new MangaFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+            fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
 
             //Navegação Para o Fragment Search
         } else if (id == R.id.nav_search) {
             SearchFragment fragment = new SearchFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+            fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
 
         } else if (id == R.id.nav_share) {
 
