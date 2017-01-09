@@ -10,10 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +22,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        HomePageFragment fragment = new HomePageFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,6 +97,13 @@ public class MainActivity extends AppCompatActivity
             //Navegação Para o Fragment Search
         } else if (id == R.id.nav_search) {
             SearchFragment fragment = new SearchFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
+
+            //Navegação Para o Fragment HomePage
+        } else if (id == R.id.nav_home) {
+            HomePageFragment fragment = new HomePageFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();

@@ -3,20 +3,18 @@ package com.example.ruilopes.readthemanga;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import org.json.XML;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -31,8 +29,8 @@ public class SearchFragment extends Fragment {
     Button searchManga;
     ListView mangaList;
     View view;
-    TextView tv;
     private JSONObject jsonArray;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,20 +41,22 @@ public class SearchFragment extends Fragment {
         insertManga = (EditText) view.findViewById(R.id.search_txt);
         searchManga = (Button) view.findViewById(R.id.search_btn);
         mangaList = (ListView) view.findViewById(R.id.mangaListSearch);
-        tv = (TextView) view.findViewById(R.id.textView2);
+
 
         searchManga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = insertManga.getText().toString();
                 ArrayList<String> list = new ArrayList<>();
+
                 try {
-                    jsonArray = new JSONObject(new MangaParser().execute("asd").get());
-                    /*for (int i = 0; i < jsonArray.length(); i++){
-                        list.add("Title: " + jsonArray.getJSONObject(i).getString("title") );
-                    }*/
-                    tv.setText("alias: " + jsonArray.getString("alias") + "artist:" + jsonArray.getString("artist")
-                    + "categories" + jsonArray.getJSONArray("categories").toString());
+                    String xml = new MangaParser().execute(insertManga.getText().toString()).get();
+                    jsonArray = XML.toJSONObject(xml);
+                    for (int i = 0; i < jsonArray.getJSONObject("manga").getJSONArray("entry").length(); i++){
+                        list.add("Title: " + jsonArray.getJSONObject("manga").getJSONArray("entry").getJSONObject(i).getString("title") +
+                        "\n" + "Status: " + jsonArray.getJSONObject("manga").getJSONArray("entry").getJSONObject(i).getString("status") +
+                        "\t" + "Score: " + jsonArray.getJSONObject("manga").getJSONArray("entry").getJSONObject(i).getString("score")+ "\n");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -64,7 +64,27 @@ public class SearchFragment extends Fragment {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                //mangaList.setAdapter(new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, list));
+                mangaList.setAdapter(new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, list));
+            }
+        });
+
+
+        mangaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                try {
+                    bundle.putInt("id", jsonArray.getJSONObject("manga").getJSONArray("entry").getJSONObject(i).getInt("id"));
+                    bundle.putString("title", jsonArray.getJSONObject("manga").getJSONArray("entry").getJSONObject(i).getString("title"));
+
+                    MangaResults fragment = new MangaResults();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.util.ArrayList;
 
 public class DataBase extends SQLiteOpenHelper{
@@ -20,17 +19,15 @@ public class DataBase extends SQLiteOpenHelper{
     private static final String manga_table = "manga";
     private static final String id = "id";
     private static final String title = "title";
-    private static final String chapters = "chapters";
-    private static final String chap_read = "chap_read";
-    private static final String volumes = "volumes";
-    private static final String vol_read = "vol_read";
-    private static final String score = "score";
     private static final String status = "status";
+    private static final String favorite = "favorite";
 
-
+    public DataBase(Context context) {
+        super(context, db_name, null, db_version);
+    }
 
     public DataBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+        super(context, db_name, null, db_version);
     }
 
     @Override
@@ -38,8 +35,7 @@ public class DataBase extends SQLiteOpenHelper{
         Log.d("..........", "--MANGA_TABLE_CREATED--");
 
         String manga_table_create = "CREATE TABLE " + manga_table + " ( " + id + " INTEGER PRIMARY KEY, " +
-                title + " TEXT, " + chapters + " INTEGER, " + chap_read + " INTEGER, " + volumes + " INTEGER, " +
-                vol_read + " INTEGER, " + score + " INTEGER " + status + " TEXT)";
+                title + " TEXT, " + favorite + " BOOLEAN, " + status + " TEXT)";
 
         sqLiteDatabase.execSQL(manga_table_create);
     }
@@ -55,12 +51,8 @@ public class DataBase extends SQLiteOpenHelper{
     public void addManga(MangaAttributes mangaAttributes){
         SQLiteDatabase database = this.getWritableDatabase();
         String addQueryStatement = "INSERT INTO " + manga_table + " (" + id + ", " +
-                title + ", " + chapters + ", " + chap_read + ", " + volumes + ", " +
-                vol_read + ", " + score + ", " + status + ") VALUES (" +
-                mangaAttributes.getId() + ", '" + mangaAttributes.getTitle() + "', '" + mangaAttributes.getChapters()
-                + "','" + mangaAttributes.getChap_read() + "','" + mangaAttributes.getVolumes() + "','" +
-                mangaAttributes.getVol_read() + "', '" + mangaAttributes.getScore() + "', '" +
-                mangaAttributes.getStatus() + "');";
+                title + ", " + favorite + ", " + status + ") VALUES (" +
+                mangaAttributes.getId() + ", '" + mangaAttributes.getTitle() + "', '" + mangaAttributes.getStatus() + "');";
 
         database.execSQL(addQueryStatement);
         database.close();
@@ -69,9 +61,7 @@ public class DataBase extends SQLiteOpenHelper{
 
     public void updateManga(MangaAttributes mangaAttributes){
         SQLiteDatabase database = this.getWritableDatabase();
-        String updateQueryStatement = "UPDATE " + manga_table + " SET " + chap_read + " = '"
-                + mangaAttributes.getChap_read() + "', " + vol_read + " = '"
-                + mangaAttributes.getVol_read() + "', " + status + " = '" +
+        String updateQueryStatement = "UPDATE " + manga_table + " SET " + status + " = '" +
                 mangaAttributes.getStatus() + "' WHERE " + id + " = " + mangaAttributes.getId() + ";";
 
         database.execSQL(updateQueryStatement);
@@ -99,13 +89,90 @@ public class DataBase extends SQLiteOpenHelper{
             MangaAttributes manga = new MangaAttributes();
             manga.setId(c.getInt(0));
             manga.setTitle(c.getString(1));
-            manga.setChapters(c.getInt(2));
-            manga.setChap_read(c.getInt(3));
-            manga.setVolumes(c.getInt(4));
-            manga.setVol_read(c.getInt(5));
-            manga.setScore(c.getInt(6));
-            manga.setStatus(c.getString(7));
+            manga.setStatus(c.getString(2));
         }
         return mangaList;
     }
+
+    public ArrayList<MangaAttributes> favMangas() {
+        ArrayList<MangaAttributes> mangaList = new ArrayList<>();
+        String selectQueryStatement = "SELECT * FROM " + manga_table + " WHERE "+ favorite + " = 1 ;";
+
+        SQLiteDatabase sqldatabase = this.getWritableDatabase();
+        Cursor c = sqldatabase.rawQuery(selectQueryStatement, null);
+
+        while (c.moveToNext()){
+            MangaAttributes manga = new MangaAttributes();
+            manga.setId(c.getInt(0));
+            manga.setTitle(c.getString(1));
+            mangaList.add(manga);
+        }
+        return mangaList;
+    }
+
+    public void test() {
+        ArrayList<MangaAttributes> mangaList = new ArrayList<>();
+        String selectQueryStatement = "SELECT * FROM " + manga_table + " WHERE "+ favorite + " = 1 ;";
+        SQLiteDatabase sqldatabase = this.getWritableDatabase();
+        Cursor c = sqldatabase.rawQuery(selectQueryStatement, null);
+        while (c.moveToNext()){
+            Log.d("id: ", c.getInt(0)+"");
+            Log.d("name: ", c.getString(1));
+        }
+    }
+
+    public void addFavorite(int i, String name){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String ifQueryStatement = "SELECT 1 FROM " + manga_table + " WHERE " + id + " = " + i + ";";
+        Cursor c = database.rawQuery(ifQueryStatement, null);
+        String addFavQuery = "";
+        if (c.getCount()==0){
+            addFavQuery = "INSERT INTO " + manga_table + " (" + id + ", " +
+                    title + ", " + favorite + ") VALUES (" + i + ", '" + name + "', 1);";
+        }
+        else {
+            addFavQuery = "UPDATE " + manga_table + " SET " + favorite + " = 1 WHERE "
+                    + id + " = " + i + ";";
+        }
+        database.execSQL(addFavQuery);
+        database.close();
+        test();
+    }
+
+
+    public void addStatus(int i, String name, String stats){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String statusQuery = "SELECT 1 FROM " + manga_table + " WHERE " + id + " = " + i + ";";
+        Cursor c = database.rawQuery(statusQuery, null);
+        String addStatusQuery = "";
+        if (c.getCount()==0){
+            addStatusQuery = "INSERT INTO " + manga_table + " (" + id + ", " + title
+                    + ", " + status + ") VALUES (" + i + ", '" + name + "', '" + stats + "');";
+        }
+        else {
+            addStatusQuery = "UPDATE " + manga_table + " SET " + status + " = '" + stats + "' WHERE "
+                    + id + " = " + i + ";";
+        }
+        database.execSQL(addStatusQuery);
+        database.close();
+    }
+
+
+    public ArrayList<MangaAttributes> mylist() {
+        ArrayList<MangaAttributes> mangaList = new ArrayList<>();
+        String selectQueryStatement = "SELECT * FROM " + manga_table + " WHERE "+ status + " != '';";
+
+        SQLiteDatabase sqldatabase = this.getWritableDatabase();
+        Cursor c = sqldatabase.rawQuery(selectQueryStatement, null);
+
+        while (c.moveToNext()){
+            MangaAttributes manga = new MangaAttributes();
+            manga.setId(c.getInt(0));
+            manga.setTitle(c.getString(1));
+            manga.setStatus(c.getString(3));
+            mangaList.add(manga);
+        }
+        return mangaList;
+    }
+
 }

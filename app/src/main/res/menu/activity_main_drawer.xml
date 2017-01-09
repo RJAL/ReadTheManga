@@ -3,17 +3,21 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Home" />
+        <item
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Favorites" />
+            android:title="Favorite Manga" />
         <item
             android:id="@+id/nav_manga"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Manga" />
+            android:title="My Manga" />
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Search" />
+            android:title="Search Manga" />
     </group>
 
     <item android:title="Communicate">

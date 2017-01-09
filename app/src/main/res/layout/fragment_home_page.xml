@@ -1,0 +1,55 @@
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ruilopes.readthemanga.HomePageFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        app:srcCompat="@drawable/crippling_depressionv2"
+        android:scaleType="fitStart"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Trabalho realizado por Rui Lopes (A027972) sobre mangas. A aplicação tem os objetivos de aceder à internet, navegação na app e armazenar informação localmente. O projeto chama-se ReadTheManga!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/imageView6"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:text="Apresentação do Trabalho de Computação Móvel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="69dp"
+        android:id="@+id/textView3"
+        android:textSize="20sp"
+        android:layout_above="@+id/textView4"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
+
+
+</ScrollView>
+</LinearLayout>
