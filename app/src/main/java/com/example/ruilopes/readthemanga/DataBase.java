@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import java.util.ArrayList;
 
+
+//Classe da base de dados
 public class DataBase extends SQLiteOpenHelper{
 
     private static final String log = "DataBase";
@@ -30,6 +32,8 @@ public class DataBase extends SQLiteOpenHelper{
         super(context, db_name, null, db_version);
     }
 
+
+    //Query Statements
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d("..........", "--MANGA_TABLE_CREATED--");
@@ -94,6 +98,7 @@ public class DataBase extends SQLiteOpenHelper{
         return mangaList;
     }
 
+
     public ArrayList<MangaAttributes> favMangas() {
         ArrayList<MangaAttributes> mangaList = new ArrayList<>();
         String selectQueryStatement = "SELECT * FROM " + manga_table + " WHERE "+ favorite + " = 1 ;";
@@ -110,6 +115,7 @@ public class DataBase extends SQLiteOpenHelper{
         return mangaList;
     }
 
+
     public void test() {
         ArrayList<MangaAttributes> mangaList = new ArrayList<>();
         String selectQueryStatement = "SELECT * FROM " + manga_table + " WHERE "+ favorite + " = 1 ;";
@@ -120,6 +126,7 @@ public class DataBase extends SQLiteOpenHelper{
             Log.d("name: ", c.getString(1));
         }
     }
+
 
     public void addFavorite(int i, String name){
         SQLiteDatabase database = this.getWritableDatabase();
@@ -174,5 +181,4 @@ public class DataBase extends SQLiteOpenHelper{
         }
         return mangaList;
     }
-
 }

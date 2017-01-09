@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
+//Fragmento relacionado com o status (do utilizador) sobre o manga
 public class MangaFragment extends Fragment {
 
 

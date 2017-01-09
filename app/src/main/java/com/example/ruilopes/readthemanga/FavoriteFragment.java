@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
+//Fragmento sobre os mangas favoritos
 public class FavoriteFragment extends Fragment {
 
 
@@ -24,6 +25,7 @@ public class FavoriteFragment extends Fragment {
     View view;
     DataBase db;
     ArrayList<MangaAttributes> list = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +61,6 @@ public class FavoriteFragment extends Fragment {
                 fragmentTransaction.replace(R.id.main_fragmentLayout, fragment).addToBackStack(null).commit();
             }
         });
-
         return view;
     }
 }

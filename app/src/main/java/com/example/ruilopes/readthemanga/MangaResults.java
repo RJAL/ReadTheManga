@@ -12,12 +12,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import java.util.concurrent.ExecutionException;
 
 
+//Fragmento relacionado com a informação do manga quando o utilizador clica num item da lista
 public class MangaResults extends Fragment {
 
     public MangaResults() {
@@ -38,6 +41,7 @@ public class MangaResults extends Fragment {
     Spinner sp;
     Button btnSave;
     DataBase db;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,22 +100,26 @@ public class MangaResults extends Fragment {
 
         sp.setAdapter(new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, str));
 
+        //Botão favorito
         btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 db.addFavorite(id, title);
+
+                Toast.makeText(getContext(), "Manga Added as Favorite", Toast.LENGTH_SHORT).show();
             }
         });
 
 
+        //Botão save
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 db.addStatus(id, title, str[sp.getSelectedItemPosition()]);
+
+                Toast.makeText(getContext(), "Manga Added to 'My Manga' with Status", Toast.LENGTH_SHORT).show();
             }
         });
-
-
         return view;
     }
 }

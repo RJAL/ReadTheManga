@@ -19,11 +19,13 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
+//Fragmento relacionado com a pesquisa do manga
 public class SearchFragment extends Fragment {
 
     public SearchFragment() {
         // Required empty public constructor
     }
+
 
     EditText insertManga;
     Button searchManga;
@@ -87,7 +89,6 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 }

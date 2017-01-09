@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+//Fragmento da página principal
 public class HomePageFragment extends Fragment {
 
 
@@ -22,5 +23,4 @@ public class HomePageFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_page, container, false);
     }
-
 }
